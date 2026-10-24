@@ -34,20 +34,20 @@ También funcionan voces en la nube (Speechify, ElevenLabs, OpenAI) con tu propi
 
 | | |
 | --- | --- |
-| `/leer` | lee la última respuesta |
-| `/leer 3` | lee la tercera respuesta contando desde la última (como `/copy 3`) |
-| `/leer <texto>` | lee ese texto |
-| `/leer-parar` | para la lectura |
-| `/leer-idioma [auto\|es\|en]` | idioma de la voz; `auto` elige español o inglés según cada respuesta |
-| `/leer-voz [es\|en] [voz]` | lista las voces, o elige la de un idioma |
-| `/leer-velocidad [0.5–2]` | velocidad |
-| `/leer-auto [on\|off]` | lee cada respuesta al terminar el turno |
-| `/leer-estado` | proveedor, idioma, voces y velocidad |
+| `/read-along` | lee la última respuesta |
+| `/read-along 3` | lee la tercera respuesta contando desde la última (como `/copy 3`) |
+| `/read-along <texto>` | lee ese texto |
+| `/read-along-parar` | para la lectura |
+| `/read-along-idioma [auto\|es\|en]` | idioma de la voz; `auto` elige español o inglés según cada respuesta |
+| `/read-along-voz [es\|en] [voz]` | lista las voces, o elige la de un idioma |
+| `/read-along-velocidad [0.5–2]` | velocidad |
+| `/read-along-auto [on\|off]` | lee cada respuesta al terminar el turno |
+| `/read-along-estado` | proveedor, idioma, voces y velocidad |
 
 En pantalla:
 
 - **Debajo del prompt**: los botones `🔊 leer` / `■ parar` e `idioma: auto|ES|EN`.
-- **Mientras lee**: la respuesta conserva su formato. La frase que suena se dibuja como código inline (en color), o con un `▸` adelante si ya tiene formato propio. Una banda sobre el prompt muestra el progreso, el idioma, la voz y la velocidad, con los botones **Parar** y **− / +** para la velocidad.
+- **Mientras lee**: la respuesta conserva su formato. La frase que suena se dibuja como código inline (en color), o con un `▸` adelante si ya tiene formato propio. Una banda sobre el prompt muestra el progreso, el idioma, la voz y la velocidad, con los botones **Parar** y **− / +** para la velocidad; el cambio se escucha desde la frase siguiente, sin reiniciar.
 - **Al pasar el mouse sobre una respuesta** aparece un botón 🔊 que lee solo ese bloque.
 
 Para hacer clic hace falta el modo pantalla completa de la terminal (con soporte de mouse); todas las acciones tienen también su comando.

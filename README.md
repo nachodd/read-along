@@ -34,20 +34,20 @@ Cloud voices (Speechify, ElevenLabs, OpenAI) work too with your own API key; see
 
 | | |
 | --- | --- |
-| `/leer` | read the last reply |
-| `/leer 3` | read the third reply counting back from the last (like `/copy 3`) |
-| `/leer <text>` | read that text |
-| `/leer-parar` | stop |
-| `/leer-idioma [auto\|es\|en]` | voice language; `auto` picks Spanish or English per reply |
-| `/leer-voz [es\|en] [voice]` | list voices, or pick the one for a language |
-| `/leer-velocidad [0.5–2]` | speed |
-| `/leer-auto [on\|off]` | read every reply when its turn ends |
-| `/leer-estado` | provider, language, voices, speed |
+| `/read-along` | read the last reply |
+| `/read-along 3` | read the third reply counting back from the last (like `/copy 3`) |
+| `/read-along <text>` | read that text |
+| `/read-along-parar` | stop |
+| `/read-along-idioma [auto\|es\|en]` | voice language; `auto` picks Spanish or English per reply |
+| `/read-along-voz [es\|en] [voice]` | list voices, or pick the one for a language |
+| `/read-along-velocidad [0.5–2]` | speed |
+| `/read-along-auto [on\|off]` | read every reply when its turn ends |
+| `/read-along-estado` | provider, language, voices, speed |
 
 On screen:
 
 - **Under the prompt**: `🔊 leer` / `■ parar` and `idioma: auto|ES|EN` buttons.
-- **While reading**: the reply keeps its formatting; the sentence being spoken is drawn as inline code (in color), or marked with `▸` when it holds markup of its own. A band above the prompt shows progress, language, voice and speed, with **Parar** and **− / +** speed buttons.
+- **While reading**: the reply keeps its formatting; the sentence being spoken is drawn as inline code (in color), or marked with `▸` when it holds markup of its own. A band above the prompt shows progress, language, voice and speed, with **Parar** and **− / +** speed buttons; a new speed is heard from the next sentence, no restart.
 - **Hovering a reply** shows a 🔊 button that reads just that block.
 
 Clicking needs the fullscreen terminal (mouse support); every action also has its command.

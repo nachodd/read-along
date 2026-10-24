@@ -28,7 +28,7 @@ const settings = atom({ plugin: 'read-along', key: 'settings' } as const, DEFAUL
   shape: 'settings-1',
 })
 
-type Run = { id: number; stream: AsyncGenerator<unknown, unknown> }
+type Run = { id: number; stream: AsyncGenerator<unknown, unknown>; control?: string }
 
 // One reading at a time; a reload starts over with none.
 let current: Run | null = null
@@ -158,8 +158,10 @@ async function start($: EngineInterface, blocks: string[]) {
         pending = lines.pop() ?? ''
         for (const line of lines) {
           if (!line.trim() || current?.id !== id) continue
-          const msg = JSON.parse(line) as { items?: Sentence[]; at?: number }
-          if (msg.items) {
+          const msg = JSON.parse(line) as { control?: string; items?: Sentence[]; at?: number }
+          if (msg.control) {
+            current.control = msg.control
+          } else if (msg.items) {
             const items = msg.items
             await update($, reading, r => ({ ...r, items }))
           } else if (typeof msg.at === 'number') {
@@ -200,11 +202,15 @@ async function cycleLang($: EngineInterface) {
   }))
 }
 
-async function changeSpeed($: EngineInterface, delta: number) {
+async function changeSpeed($: EngineInterface, speed: (now: number) => number) {
   await changeSettings($, s => ({
     ...s,
-    speed: Math.round(Math.min(2, Math.max(0.5, s.speed + delta)) * 10) / 10,
+    speed: Math.round(Math.min(2, Math.max(0.5, speed(s.speed))) * 10) / 10,
   }))
+  // A reading under way takes it from its next sentence.
+  if (current?.control) {
+    await $.fs.write(current.control, JSON.stringify({ speed: (await read($, settings)).speed }))
+  }
 }
 
 function langLabel(lang: VoiceSettings['lang']): string {
@@ -225,40 +231,40 @@ export const register: Register = on => {
     }))
 
     await $.command.register({
-      name: 'leer',
-      description: 'Leer en voz alta una respuesta: /leer 3 = la tercera desde el final',
+      name: 'read-along',
+      description: 'Leer en voz alta una respuesta: /read-along 3 = la tercera desde el final',
       argumentHint: '[n | texto]',
     })
     await $.command.register({
-      name: 'leer-parar',
+      name: 'read-along-parar',
       description: 'Parar la lectura en voz alta',
       immediate: true,
     })
     await $.command.register({
-      name: 'leer-idioma',
+      name: 'read-along-idioma',
       description: 'Idioma de la voz: auto (según el texto), es o en',
       argumentHint: '[auto|es|en]',
       immediate: true,
     })
     await $.command.register({
-      name: 'leer-voz',
+      name: 'read-along-voz',
       description: 'Ver las voces o elegir la de un idioma',
       argumentHint: '[es|en] [voz]',
     })
     await $.command.register({
-      name: 'leer-velocidad',
+      name: 'read-along-velocidad',
       description: 'Velocidad de lectura, de 0.5 a 2',
       argumentHint: '[n]',
       immediate: true,
     })
     await $.command.register({
-      name: 'leer-auto',
+      name: 'read-along-auto',
       description: 'Leer cada respuesta al terminar el turno',
       argumentHint: '[on|off]',
       immediate: true,
     })
     await $.command.register({
-      name: 'leer-estado',
+      name: 'read-along-estado',
       description: 'Proveedor, idioma, voces y velocidad de la lectura en voz alta',
     })
 
@@ -278,7 +284,7 @@ export const register: Register = on => {
     return done
   })
 
-  on('command.run', { command: 'leer' }, async ($, e) => {
+  on('command.run', { command: 'read-along' }, async ($, e) => {
     const arg = e.args.trim()
     if (arg === '') return { text: await readReply($, 1) }
     if (/^\d+$/.test(arg)) return { text: await readReply($, Number(arg)) }
@@ -287,26 +293,26 @@ export const register: Register = on => {
     return { text: 'Leyendo el texto…' }
   })
 
-  on('command.run', { command: 'leer-parar' }, async $ => {
+  on('command.run', { command: 'read-along-parar' }, async $ => {
     await stop($)
 
     return { text: 'Lectura detenida.' }
   })
 
-  on('command.run', { command: 'leer-idioma' }, async ($, e) => {
+  on('command.run', { command: 'read-along-idioma' }, async ($, e) => {
     const arg = e.args.trim().toLowerCase()
     if (arg === 'auto' || arg === 'es' || arg === 'en') {
       await changeSettings($, s => ({ ...s, lang: arg }))
     } else if (arg === '') {
       await cycleLang($)
     } else {
-      return { text: 'Usá /leer-idioma auto, es o en.' }
+      return { text: 'Usá /read-along-idioma auto, es o en.' }
     }
 
     return { text: `Idioma: ${langLabel((await read($, settings)).lang)}` }
   })
 
-  on('command.run', { command: 'leer-voz' }, async ($, e) => {
+  on('command.run', { command: 'read-along-voz' }, async ($, e) => {
     const [first = '', ...rest] = e.args.trim().split(/\s+/)
     const s = await read($, settings)
     const lang: Lang | null = first === 'es' || first === 'en' ? first : null
@@ -314,7 +320,7 @@ export const register: Register = on => {
 
     if (voice) {
       const target = lang ?? voiceLang(voice) ?? (s.lang === 'auto' ? null : s.lang)
-      if (!target) return { text: `¿Para qué idioma? /leer-voz es ${voice}  o  /leer-voz en ${voice}` }
+      if (!target) return { text: `¿Para qué idioma? /read-along-voz es ${voice}  o  /read-along-voz en ${voice}` }
       await changeSettings($, cur => ({
         ...cur,
         voices: {
@@ -351,21 +357,21 @@ export const register: Register = on => {
         'Inglés:',
         ...voices.filter(isEnglish).map(v => row(v, 'en')),
         '',
-        'Elegir: /leer-voz es <voz>  ·  /leer-voz en <voz>',
+        'Elegir: /read-along-voz es <voz>  ·  /read-along-voz en <voz>',
       ].join('\n'),
     }
   })
 
-  on('command.run', { command: 'leer-velocidad' }, async ($, e) => {
+  on('command.run', { command: 'read-along-velocidad' }, async ($, e) => {
     const n = Number(e.args.trim().replace(',', '.'))
     if (e.args.trim() !== '' && Number.isFinite(n)) {
-      await changeSettings($, s => ({ ...s, speed: Math.min(2, Math.max(0.5, n)) }))
+      await changeSpeed($, () => n)
     }
 
     return { text: `Velocidad: ${(await read($, settings)).speed}x` }
   })
 
-  on('command.run', { command: 'leer-auto' }, async ($, e) => {
+  on('command.run', { command: 'read-along-auto' }, async ($, e) => {
     const arg = e.args.trim().toLowerCase()
     await changeSettings($, s => ({
       ...s,
@@ -376,7 +382,7 @@ export const register: Register = on => {
     return { text: `Lectura automática: ${isOn ? 'activada (cada respuesta)' : 'desactivada'}` }
   })
 
-  on('command.run', { command: 'leer-estado' }, async $ => {
+  on('command.run', { command: 'read-along-estado' }, async $ => {
     const s = await read($, settings)
 
     return {
@@ -463,8 +469,8 @@ export const register: Register = on => {
             {lang.toUpperCase()} · {voiceFor(s, lang) || 'voz del sistema'} · {s.speed}x
           </Text>
           <Button key="leer-parar" label="Parar" hotkey="s" onPress={() => stop($)} />
-          <Button key="leer-lento" label="−" hotkey="1" onPress={() => changeSpeed($, -0.1)} />
-          <Button key="leer-rapido" label="+" hotkey="2" onPress={() => changeSpeed($, 0.1)} />
+          <Button key="leer-lento" label="−" hotkey="1" onPress={() => changeSpeed($, n => n - 0.1)} />
+          <Button key="leer-rapido" label="+" hotkey="2" onPress={() => changeSpeed($, n => n + 0.1)} />
         </Box>
         {now && <Text inverse wrap="truncate-end">{now.s}</Text>}
       </Box>
