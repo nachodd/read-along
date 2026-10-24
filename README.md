@@ -37,12 +37,12 @@ Cloud voices (Speechify, ElevenLabs, OpenAI) work too with your own API key; see
 | `/read-along` | read the last reply |
 | `/read-along 3` | read the third reply counting back from the last (like `/copy 3`) |
 | `/read-along <text>` | read that text |
-| `/read-along-parar` | stop |
-| `/read-along-idioma [auto\|es\|en]` | voice language; `auto` picks Spanish or English per reply |
-| `/read-along-voz [es\|en] [voice]` | list voices, or pick the one for a language |
-| `/read-along-velocidad [0.5–2]` | speed |
+| `/read-along-stop` | stop |
+| `/read-along-lang [auto\|es\|en]` | voice language; `auto` picks Spanish or English per reply |
+| `/read-along-voice [es\|en] [voice]` | list voices, or pick the one for a language |
+| `/read-along-speed [0.5–2]` | speed |
 | `/read-along-auto [on\|off]` | read every reply when its turn ends |
-| `/read-along-estado` | provider, language, voices, speed |
+| `/read-along-status` | provider, language, voices, speed |
 
 On screen:
 

@@ -37,12 +37,12 @@ También funcionan voces en la nube (Speechify, ElevenLabs, OpenAI) con tu propi
 | `/read-along` | lee la última respuesta |
 | `/read-along 3` | lee la tercera respuesta contando desde la última (como `/copy 3`) |
 | `/read-along <texto>` | lee ese texto |
-| `/read-along-parar` | para la lectura |
-| `/read-along-idioma [auto\|es\|en]` | idioma de la voz; `auto` elige español o inglés según cada respuesta |
-| `/read-along-voz [es\|en] [voz]` | lista las voces, o elige la de un idioma |
-| `/read-along-velocidad [0.5–2]` | velocidad |
+| `/read-along-stop` | para la lectura |
+| `/read-along-lang [auto\|es\|en]` | idioma de la voz; `auto` elige español o inglés según cada respuesta |
+| `/read-along-voice [es\|en] [voz]` | lista las voces, o elige la de un idioma |
+| `/read-along-speed [0.5–2]` | velocidad |
 | `/read-along-auto [on\|off]` | lee cada respuesta al terminar el turno |
-| `/read-along-estado` | proveedor, idioma, voces y velocidad |
+| `/read-along-status` | proveedor, idioma, voces y velocidad |
 
 En pantalla:
 

@@ -1,6 +1,6 @@
 {
   "name": "read-along",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Read Claude's replies aloud with neural or system voices, highlighting the sentence being spoken",
   "author": {
     "name": "Ignacio Durand"
