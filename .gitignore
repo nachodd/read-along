@@ -1,0 +1,6 @@
+.DS_Store
+__pycache__/
+*.log
+.claude-plugin/types/
+hooks/*.js
+tests/*.js

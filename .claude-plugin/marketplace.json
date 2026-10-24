@@ -1,0 +1,15 @@
+{
+  "name": "leer-en-voz",
+  "owner": {
+    "name": "Ignacio Durand"
+  },
+  "metadata": {
+    "description": "Read Claude Code's replies aloud, highlighting the sentence being spoken"
+  },
+  "plugins": [
+    {
+      "name": "leer-en-voz",
+      "source": "./"
+    }
+  ]
+}
