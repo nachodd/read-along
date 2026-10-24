@@ -1,9 +1,11 @@
 {
-  "name": "leer-en-voz",
+  "name": "read-along",
   "version": "0.1.0",
   "description": "Read Claude's replies aloud with neural or system voices, highlighting the sentence being spoken",
-  "author": { "name": "Ignacio Durand" },
-  "repository": "https://github.com/nachodd/leer-en-voz",
+  "author": {
+    "name": "Ignacio Durand"
+  },
+  "repository": "https://github.com/nachodd/read-along",
   "license": "MIT",
   "types": "./types/index.d.ts"
 }

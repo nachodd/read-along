@@ -21,10 +21,10 @@ const DEFAULTS: VoiceSettings = {
 }
 const LANG_CYCLE: VoiceSettings['lang'][] = ['auto', 'es', 'en']
 
-const reading = atom({ plugin: 'leer-en-voz', key: 'reading' } as const, IDLE, {
+const reading = atom({ plugin: 'read-along', key: 'reading' } as const, IDLE, {
   shape: 'reading-2',
 })
-const settings = atom({ plugin: 'leer-en-voz', key: 'settings' } as const, DEFAULTS, {
+const settings = atom({ plugin: 'read-along', key: 'settings' } as const, DEFAULTS, {
   shape: 'settings-1',
 })
 
@@ -424,7 +424,7 @@ export const register: Register = on => {
     if (e.surface !== 'terminal') return drawn
     const r = await read($, reading)
     const s = await read($, settings)
-    const { Box, Button } = $.ui.resolve(e)
+    const { Box, Button, Text } = $.ui.resolve(e)
     const isReading = r.sources.length > 0
 
     return (
@@ -436,6 +436,7 @@ export const register: Register = on => {
           ) : (
             <Button key="leer-hint-play" plain dimColor label={'\u{1F50A} leer'} onPress={() => readReply($, 1)} />
           )}
+          <Text dimColor>–</Text>
           <Button key="leer-hint-lang" plain dimColor label={`idioma: ${langLabel(s.lang)}`} onPress={() => cycleLang($)} />
         </Box>
       </Box>

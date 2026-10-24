@@ -1,7 +1,7 @@
 import { expect, test } from 'claude-code/testing'
 
 const MESSAGE = {
-  plugin: 'leer-en-voz',
+  plugin: 'read-along',
   component: 'AssistantMessage',
   requestId: 'msg-1',
   props: { text: 'Hola. Chau.', isFirstOfReply: true },
@@ -79,7 +79,7 @@ test('under the prompt: the engine hint, then read and language buttons', async 
   })
 
   const ui = await $.ui.mount({
-    plugin: 'leer-en-voz',
+    plugin: 'read-along',
     component: 'PromptHint',
     props: { isDraft: false, isWorking: false, hint: '? for shortcuts' },
     surface: 'terminal',

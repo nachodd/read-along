@@ -28,6 +28,6 @@ export type VoiceSettings = {
 
 declare module 'claude-code' {
   interface PluginState {
-    'leer-en-voz': { reading: Shaped<Reading>; settings: Shaped<VoiceSettings> }
+    'read-along': { reading: Shaped<Reading>; settings: Shaped<VoiceSettings> }
   }
 }

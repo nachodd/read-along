@@ -1,21 +1,21 @@
-# leer-en-voz
+# read-along
+
+[Español](README.es.md)
 
 Read Claude Code's replies aloud, and see which sentence is being spoken, highlighted in place in the reply. Built as a Claude Code mod (a plugin with a hooks module), terminal first. The interface is in Spanish.
-
-Lee en voz alta las respuestas de Claude Code y resalta, dentro del mismo mensaje, la frase que se está leyendo.
 
 ## Install
 
 At the prompt of a Claude Code terminal session:
 
 ```
-/plugin install leer-en-voz --marketplace nachodd/leer-en-voz
+/plugin install read-along --marketplace nachodd/read-along
 ```
 
 From a shell:
 
 ```
-claude plugin install leer-en-voz --marketplace nachodd/leer-en-voz
+claude plugin install read-along --marketplace nachodd/read-along
 ```
 
 Requires Python 3.9+ on your PATH as `python3`. No packages: the engine is the standard library.
