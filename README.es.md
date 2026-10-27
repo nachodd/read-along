@@ -46,7 +46,7 @@ También funcionan voces en la nube (Speechify, ElevenLabs, OpenAI) con tu propi
 
 En pantalla:
 
-- **Debajo del prompt**: los botones `🔊 leer` / `■ parar` e `idioma: auto|ES|EN`.
+- **A la derecha, debajo del prompt**: los botones `🔊 read` / `■ stop` y `lang: auto|ES|EN`.
 - **Mientras lee**: la respuesta conserva su formato. La frase que suena se dibuja como código inline (en color), o con un `▸` adelante si ya tiene formato propio. Una banda sobre el prompt muestra el progreso, el idioma, la voz y la velocidad, con los botones **Parar** y **− / +** para la velocidad; el cambio se escucha desde la frase siguiente, sin reiniciar.
 - **Al pasar el mouse sobre una respuesta** aparece un botón 🔊 que lee solo ese bloque.
 

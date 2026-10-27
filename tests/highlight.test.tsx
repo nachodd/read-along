@@ -72,20 +72,20 @@ test('another block keeps the engine drawing and gets the speaker', async ($, on
   await ui.unmount()
 })
 
-test('under the prompt: the engine hint, then read and language buttons', async ($, on) => {
+test('right of the prompt footer: the engine modes, then read and language buttons', async ($, on) => {
   on('ui.render', ($, e) => {
     const { Text } = $.ui.resolve(e)
-    return <Text>? for shortcuts</Text>
+    return <Text>focus</Text>
   })
 
   const ui = await $.ui.mount({
     plugin: 'read-along',
-    component: 'PromptHint',
-    props: { isDraft: false, isWorking: false, hint: '? for shortcuts' },
+    component: 'SessionMode',
+    props: { modes: ['focus'] },
     surface: 'terminal',
   })
-  expect(await ui.find({ type: 'Text', text: /shortcuts/ })).toBeTruthy()
+  expect(await ui.find({ type: 'Text', text: /focus/ })).toBeTruthy()
   expect(await ui.find({ type: 'Button', key: 'leer-hint-play' })).toBeTruthy()
-  expect((await ui.find({ type: 'Button', key: 'leer-hint-lang' }))?.text).toBe('idioma: auto')
+  expect((await ui.find({ type: 'Button', key: 'leer-hint-lang' }))?.text).toBe('lang: auto')
   await ui.unmount()
 })

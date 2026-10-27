@@ -46,7 +46,7 @@ Cloud voices (Speechify, ElevenLabs, OpenAI) work too with your own API key; see
 
 On screen:
 
-- **Under the prompt**: `🔊 leer` / `■ parar` and `idioma: auto|ES|EN` buttons.
+- **Right of the prompt footer**: `🔊 read` / `■ stop` and `lang: auto|ES|EN` buttons.
 - **While reading**: the reply keeps its formatting; the sentence being spoken is drawn as inline code (in color), or marked with `▸` when it holds markup of its own. A band above the prompt shows progress, language, voice and speed, with **Parar** and **− / +** speed buttons; a new speed is heard from the next sentence, no restart.
 - **Hovering a reply** shows a 🔊 button that reads just that block.
 

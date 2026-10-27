@@ -424,8 +424,9 @@ export const register: Register = on => {
     )
   })
 
-  // Under the prompt: read / stop, and the language, always at hand.
-  on('ui.render', { component: 'PromptHint' }, async ($, e, next) => {
+  // At the right of the prompt footer, beside the engine's mode labels:
+  // read / stop and the language, always at hand.
+  on('ui.render', { component: 'SessionMode' }, async ($, e, next) => {
     const drawn = await next(e)
     if (e.surface !== 'terminal') return drawn
     const r = await read($, reading)
@@ -438,12 +439,12 @@ export const register: Register = on => {
         {drawn}
         <Box gap={1}>
           {isReading ? (
-            <Button key="leer-hint-stop" plain dimColor label="■ parar" onPress={() => stop($)} />
+            <Button key="leer-hint-stop" plain dimColor label="■ stop" onPress={() => stop($)} />
           ) : (
-            <Button key="leer-hint-play" plain dimColor label={'\u{1F50A} leer'} onPress={() => readReply($, 1)} />
+            <Button key="leer-hint-play" plain dimColor label={'\u{1F50A} read'} onPress={() => readReply($, 1)} />
           )}
           <Text dimColor>–</Text>
-          <Button key="leer-hint-lang" plain dimColor label={`idioma: ${langLabel(s.lang)}`} onPress={() => cycleLang($)} />
+          <Button key="leer-hint-lang" plain dimColor label={`lang: ${langLabel(s.lang)}`} onPress={() => cycleLang($)} />
         </Box>
       </Box>
     )
